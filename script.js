@@ -37,9 +37,11 @@ function deleteTodo(e) {
 }
 
 function editTodo(e) {
-    console.log(e.target);
+    // console.log(e.target);
 
     const parentEle = e.target.parentElement;
+
+    if (parentEle.querySelector("#edit-todo")) return;
 
     const updateContainer = document.createElement("div");
     parentEle.appendChild(updateContainer);
@@ -66,7 +68,7 @@ function editTodo(e) {
 }
 
 function updateTodo(e) {
-    console.log(e.target);
+    // console.log(e.target);
 
     const parentEle = e.target.parentElement;
     const editTodoInput = parentEle.querySelector("#edit-todo");
