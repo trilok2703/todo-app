@@ -1,5 +1,9 @@
 function add_todo(){
     const todoVal = document.getElementById("task").value;
+    if (!todoVal.trim()) {
+        alert("Task cannot be empty!");
+        return;
+    }
     // console.log(todoVal);
     const node = document.createElement("div");
     node.className = "list-group-item list-group-item-primary mb-2";
