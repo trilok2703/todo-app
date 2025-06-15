@@ -4,7 +4,7 @@ function createButton({
     className = "",
     clickCallback = null,
     style = "",
-    id = "",
+    id = ""
 }) {
     const btn = document.createElement("button");
     if (text) btn.textContent = text;
@@ -35,7 +35,7 @@ function add_todo() {
         className: "btn btn-danger",
         clickCallback: deleteTodo,
         style: "float:right",
-        id: "",
+        id: ""
     });
 
     node.appendChild(delBtn);
@@ -45,7 +45,7 @@ function add_todo() {
         className: "btn btn-warning",
         clickCallback: editTodo,
         style: "float:right; margin-right:10px",
-        id: "",
+        id: ""
     });
 
     node.appendChild(editBtn);
@@ -82,7 +82,7 @@ function editTodo(e) {
         className: "btn btn-success",
         clickCallback: updateTodo,
         style: "",
-        id: "update-btn",
+        id: "update-btn"
     });
 
     updateContainer.appendChild(updateBtn);
@@ -92,7 +92,7 @@ function editTodo(e) {
         className: "btn btn-danger",
         clickCallback: closeEdit,
         style: "",
-        id: "",
+        id: ""
     });
 
     updateContainer.appendChild(closeBtn);
