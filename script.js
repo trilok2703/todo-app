@@ -1,44 +1,68 @@
-function add_todo(){
+// === Helper Functions ===
+function createButton({
+    text = "",
+    className = "",
+    clickCallback = null,
+    style = "",
+    id = ""
+}) {
+    const btn = document.createElement("button");
+    if (text) btn.textContent = text;
+    if (className) btn.className = className;
+    if (style) btn.style = style;
+    if (id) btn.id = id;
+    if (typeof clickCallback === "function") {
+        btn.addEventListener("click", clickCallback);
+    }
+    return btn;
+}
+
+function add_todo() {
     const todoVal = document.getElementById("task").value;
+
     if (!todoVal.trim()) {
         alert("Task cannot be empty!");
         return;
     }
-    // console.log(todoVal);
+
     const node = document.createElement("div");
     node.className = "list-group-item list-group-item-primary mb-2";
     const textNode = document.createTextNode(todoVal);
     node.appendChild(textNode);
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "Delete";
-    delBtn.className = "btn btn-danger";
-    delBtn.style = "float:right";
-    delBtn.onclick = deleteTodo;
+
+    const delBtn = createButton({
+        text: "Delete",
+        className: "btn btn-danger",
+        clickCallback: deleteTodo,
+        style: "float:right",
+        id: ""
+    });
+
     node.appendChild(delBtn);
-    // console.log(node);
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "Edit";
-    editBtn.className = "btn btn-warning";
-    editBtn.style = "float:right; margin-right:10px";
-    editBtn.onclick = editTodo;
+
+    const editBtn = createButton({
+        text: "Edit",
+        className: "btn btn-warning",
+        clickCallback: editTodo,
+        style: "float:right; margin-right:10px",
+        id: ""
+    });
+
     node.appendChild(editBtn);
+
     document.getElementById("result").appendChild(node);
     document.getElementById("task").value = "";
-    // console.log(document.getElementById("result"));
 }
 
-function clearTodo(){
+function clearTodo() {
     document.getElementById("result").innerHTML = "";
 }
 
 function deleteTodo(e) {
-    // console.log(e.target);
     e.target.parentElement.remove();
 }
 
 function editTodo(e) {
-    // console.log(e.target);
-
     const parentEle = e.target.parentElement;
 
     if (parentEle.querySelector("#edit-todo")) return;
@@ -53,23 +77,28 @@ function editTodo(e) {
 
     updateContainer.appendChild(inputEle);
 
-    const updateBtn = document.createElement("button");
-    updateBtn.textContent = "Update";
-    updateBtn.className = "btn btn-success";
-    updateBtn.id = "update-btn";
-    updateBtn.onclick = updateTodo;
+    const updateBtn = createButton({
+        text: "Update",
+        className: "btn btn-success",
+        clickCallback: updateTodo,
+        style: "",
+        id: "update-btn"
+    });
+
     updateContainer.appendChild(updateBtn);
 
-    const closeBtn = document.createElement("button");
-    closeBtn.textContent = "Close";
-    closeBtn.className = "btn btn-danger";
-    closeBtn.onclick = closeEdit;
+    const closeBtn = createButton({
+        text: "Close",
+        className: "btn btn-danger",
+        clickCallback: closeEdit,
+        style: "",
+        id: ""
+    });
+
     updateContainer.appendChild(closeBtn);
 }
 
 function updateTodo(e) {
-    // console.log(e.target);
-
     const parentEle = e.target.parentElement;
     const editTodoInput = parentEle.querySelector("#edit-todo");
     const updatedVal = editTodoInput.value;
