@@ -1,22 +1,3 @@
-// === Helper Functions ===
-function createButton({
-    text = "",
-    className = "",
-    clickCallback = null,
-    style = "",
-    id = ""
-}) {
-    const btn = document.createElement("button");
-    if (text) btn.textContent = text;
-    if (className) btn.className = className;
-    if (style) btn.style = style;
-    if (id) btn.id = id;
-    if (typeof clickCallback === "function") {
-        btn.addEventListener("click", clickCallback);
-    }
-    return btn;
-}
-
 function add_todo() {
     const todoVal = document.getElementById("task").value;
 
@@ -70,10 +51,12 @@ function editTodo(e) {
     const updateContainer = document.createElement("div");
     parentEle.appendChild(updateContainer);
 
-    const inputEle = document.createElement("input");
-    inputEle.className = "form-control mt-4 mb-2";
-    inputEle.id = "edit-todo";
-    inputEle.placeholder = "Edit the selected todo";
+    const inputEle = createInput({
+        className: "form-control mt-4 mb-2",
+        type: "text",
+        placeholder:"Edit the text",
+        id:"edit-todo"
+    });
 
     updateContainer.appendChild(inputEle);
 
