@@ -1,16 +1,55 @@
-function add_todo() {
-    const todoVal = document.getElementById("task").value;
+document.addEventListener("DOMContentLoaded", function(){
+    const btnContainer = document.getElementById("btn-container");
 
+     if (!btnContainer) {
+        console.warn("⚠️ btn-container not found in DOM.");
+        return;
+    }
+
+    const addToDoBtn = createButton({
+        text:"Add To Do",
+        className:"btn btn-primary mt-2 me-2",
+        clickCallback: add_todo,
+        style:"",
+        id:""
+    });
+
+    const ClearToDoBtn = createButton({
+        text:"Clear To Do",
+        className:"btn btn-danger mt-2",
+        clickCallback: clearTodo,
+        style:"",
+        id:""
+    });
+
+    btnContainer.appendChild(addToDoBtn);
+    btnContainer.appendChild(ClearToDoBtn);
+})
+
+function add_todo() {
+    const taskInput = document.getElementById("task");
+    if (!taskInput) {
+        console.warn("⚠️ task input not found in DOM.");
+        return;
+    }
+
+    const todoVal = taskInput.value;
     if (!todoVal.trim()) {
         alert("Task cannot be empty!");
         return;
     }
 
+    const resultContainer = document.getElementById("result");
+    if (!resultContainer){
+        console.log("⚠️ 'result' not found in the DOM");
+        return;
+    }
+
     const node = document.createElement("div");
     node.className = "list-group-item list-group-item-primary mb-2";
+    
     const textNode = document.createTextNode(todoVal);
-    node.appendChild(textNode);
-
+    
     const delBtn = createButton({
         text: "Delete",
         className: "btn btn-danger",
@@ -18,9 +57,7 @@ function add_todo() {
         style: "float:right",
         id: ""
     });
-
-    node.appendChild(delBtn);
-
+    
     const editBtn = createButton({
         text: "Edit",
         className: "btn btn-warning",
@@ -28,15 +65,23 @@ function add_todo() {
         style: "float:right; margin-right:10px",
         id: ""
     });
-
+    
+    node.appendChild(textNode);
+    node.appendChild(delBtn);
     node.appendChild(editBtn);
 
-    document.getElementById("result").appendChild(node);
-    document.getElementById("task").value = "";
+    resultContainer.appendChild(node);
+    taskInput.value = "";
 }
 
 function clearTodo() {
-    document.getElementById("result").innerHTML = "";
+    const resultContainer = document.getElementById("result");
+    if (!resultContainer){
+        console.log("⚠️ 'result' not found in the DOM");
+        return;
+    }
+
+    resultContainer.innerHTML = "";
 }
 
 function deleteTodo(e) {
@@ -49,17 +94,14 @@ function editTodo(e) {
     if (parentEle.querySelector("#edit-todo")) return;
 
     const updateContainer = document.createElement("div");
-    parentEle.appendChild(updateContainer);
-
+    
     const inputEle = createInput({
         className: "form-control mt-4 mb-2",
         type: "text",
         placeholder:"Edit the text",
         id:"edit-todo"
     });
-
-    updateContainer.appendChild(inputEle);
-
+    
     const updateBtn = createButton({
         text: "Update",
         className: "btn btn-success",
@@ -67,9 +109,7 @@ function editTodo(e) {
         style: "",
         id: "update-btn"
     });
-
-    updateContainer.appendChild(updateBtn);
-
+    
     const closeBtn = createButton({
         text: "Close",
         className: "btn btn-danger",
@@ -77,8 +117,12 @@ function editTodo(e) {
         style: "",
         id: ""
     });
-
+    
+    updateContainer.appendChild(inputEle);
+    updateContainer.appendChild(updateBtn);
     updateContainer.appendChild(closeBtn);
+
+    parentEle.appendChild(updateContainer);
 }
 
 function updateTodo(e) {
